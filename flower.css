@@ -1,0 +1,153 @@
+:root {
+    --bg: #050505;
+    --gold: #c5a059;
+    --velvet: linear-gradient(to bottom, #500, #1a0000);
+    --bright: linear-gradient(to top, rgb(110, 8, 8), #910e0e);
+}
+
+body {
+    background: var(--bg);
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Georgia', serif;
+}
+
+.main-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* Cinematic Initial State */
+    opacity: 0; 
+    animation: cinematicReveal 3s ease-out forwards;
+    animation-delay: 1.5s; /* The 'some seconds' delay before it appears */
+}
+.vase-container {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+}
+
+/* Flower Layers */
+.growth-wrap {
+    position: absolute;
+    bottom: 30px;
+    transform-origin: bottom center;
+    transform: rotate(var(--tilt));
+}
+
+.petals { width: 45px; height: 60px; position: relative; }
+.p {
+    position: absolute; width: 100%; height: 100%;
+    background: var(--velvet);
+    border-radius: 50% 50% 30% 30%;
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.7);
+}
+
+/* Bloom Logic */
+.bouquet.bloom .p { background: var(--bright); box-shadow: 0 0 15px rgba(213, 2, 2, 0.844); }
+.bouquet.bloom .p-1 { transform: rotate(-40deg) translate(-20px, 10px); }
+.bouquet.bloom .p-2 { transform: rotate(40deg) translate(20px, 10px); }
+.bouquet.bloom .p-3 { transform: translateY(20px) scaleY(0.8); }
+
+.stem { width: 4px; height: var(--h); background: #074507; margin: -5px auto 0; }
+
+
+/* The Vase */
+.vase {
+    width: 80px; height: 100px;
+    background: rgba(197, 160, 89, 0.05);
+    border: 1px solid var(--gold);
+    border-radius: 5px 5px 35px 35px;
+    backdrop-filter: blur(5px);
+    z-index: 5;
+    transition: all 1s ease;
+    margin-left: -20px;
+}
+
+/* Glowing Class applied via JS */
+.glowing {
+    box-shadow: 0 0 25px var(--gold);
+    border-color: #fff !important;
+    background: rgba(197, 160, 89, 0.2);
+}
+
+#bloomBtn {
+    margin-top: 40px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 12px 30px;
+    cursor: pointer;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: all 0.5s ease;
+}
+
+#bloomBtn.glowing {
+    color: #fff;
+    text-shadow: 0 0 10px #fff;
+}
+
+.vintage-title {
+    position: absolute;
+    bottom: 30px;
+    color: var(--gold);
+    font-size: 0.7rem;
+    letter-spacing: 15px;
+    opacity: 0.3;
+  opacity: 0;
+    animation: cinematicReveal 2s ease-out forwards;
+    animation-delay: 4s; 
+    margin-left: 100px;
+}
+
+.falling-petal {
+    position: absolute;
+    width: 15px;
+    height: 20px;
+    background: linear-gradient(to bottom, #900, #500); /* Matches your vintage red */
+    border-radius: 50% 0 50% 50%;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.3));
+    z-index: 100;
+}
+
+@keyframes petalFall {
+    0% {
+        transform: translateY(-10vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) translateX(100px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+
+/* 1. Add this animation to your CSS */
+@keyframes cinematicReveal {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+        filter: blur(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
